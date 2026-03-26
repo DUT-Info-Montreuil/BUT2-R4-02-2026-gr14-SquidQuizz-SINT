@@ -1,4 +1,4 @@
-package universite_paris8.iut.qdev.tp2026.gr14.exeptions;
+package universite_paris8.iut.qdev.tp2026.gr14.exceptions;
 
 /**
  * Exception levée quand aucun joueur n'est trouvé
