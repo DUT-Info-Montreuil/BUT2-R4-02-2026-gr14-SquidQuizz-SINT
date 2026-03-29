@@ -41,11 +41,11 @@
       <scope>test</scope>
     </dependency>
 
-    <dependency>
-      <groupId>universite_Paris8.iut.qdev.tp2026.gr14</groupId>
-      <artifactId>questionnaire_sme</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
-    </dependency>
+      <dependency>
+          <groupId>universite_Paris8.iut.qdev.tp2026.gr14</groupId>
+          <artifactId>questionnaire_sme</artifactId>
+          <version>1.0.0-SNAPSHOT</version>
+      </dependency>
 
     <dependency>
       <groupId>org.univ_paris8.iut.montreuil.qdev.tp2026.gr14</groupId>
