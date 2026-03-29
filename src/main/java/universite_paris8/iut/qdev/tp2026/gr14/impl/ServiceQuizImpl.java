@@ -53,7 +53,7 @@ public class ServiceQuizImpl implements IServicesQuiz {
         ElementsPourUnePartieDTO dto = determinerElementsDispoPourPartie();
 
         // Simulation d'une préparation
-        dto.setPseudo(dto.getPseudo() + "_READY");
+        dto.setPseudo(dto.getPseudo() + "_Pret");
 
         return dto;
     }
