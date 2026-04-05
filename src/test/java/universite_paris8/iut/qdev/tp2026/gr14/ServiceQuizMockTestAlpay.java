@@ -15,6 +15,8 @@ import org.univ_paris8.iut.montreuil.qdev.tp2026.gr14.common.dtos.JoueurDTO;
 import org.univ_paris8.iut.montreuil.qdev.tp2026.gr14.common.enums.LangueEnum;
 import universite_Paris8.iut.qdev.tp2026.gr14.services.interfaces.IQuestionnaireServices;
 import universite_Paris8.iut.qdev.tp2026.gr14.entities.dto.QuestionnaireDTO;
+import universite_paris8.iut.qdev.tp2026.gr14.exceptions.AucunJoueurExceptions;
+import universite_paris8.iut.qdev.tp2026.gr14.exceptions.QuestionnaireIndisponibleExceptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +39,8 @@ public class ServiceQuizMockTestAlpay {
 
 
     @BeforeEach
-    public void init(TestInfo testInfo) {
-        objetATester = new ServiceQuizImpl();
-        System.out.println("Appel du test : " + testInfo.getDisplayName());
+    public void init() {
+        objetATester = new ServiceQuizImpl(joueurService, questionnaireService);
     }
 
     //  Données de test
@@ -93,9 +94,8 @@ public class ServiceQuizMockTestAlpay {
     public void test_aucunJoueur_leveException() throws Exception {
         when(joueurService.listerJoueurs()).thenReturn(new ArrayList<>());
 
-        assertThrows(RuntimeException.class, () ->
+        assertThrows(AucunJoueurExceptions.class, () ->
                 objetATester.determinerElementsDispoPourPartie());
-
 
         verify(questionnaireService, never()).parcourirQuestionnaireDTO(anyString());
     }
@@ -107,7 +107,7 @@ public class ServiceQuizMockTestAlpay {
         when(questionnaireService.parcourirQuestionnaireDTO(anyString()))
                 .thenReturn(new ArrayList<>());
 
-        assertThrows(RuntimeException.class, () ->
+        assertThrows(QuestionnaireIndisponibleExceptions.class, () ->
                 objetATester.determinerElementsDispoPourPartie());
     }
 
@@ -130,5 +130,16 @@ public class ServiceQuizMockTestAlpay {
 
         assertThrows(RuntimeException.class, () ->
                 objetATester.determinerElementsDispoPourPartie());
+    }
+    // TEST 7 : préparation des éléments ajoute "_READY" au pseudo
+    @Test
+    public void test_preparerElements() throws Exception {
+        when(joueurService.listerJoueurs()).thenReturn(listeJoueursValide());
+        when(questionnaireService.parcourirQuestionnaireDTO(anyString()))
+                .thenReturn(listeQuestionnairesValide());
+
+        ElementsPourUnePartieDTO result = objetATester.preparerLesElementsDeLaPartie();
+
+        assertTrue(result.getPseudo().endsWith("_READY"));
     }
 }
